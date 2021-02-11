@@ -7,11 +7,12 @@ public class Main {
         Customer c1 = new Customer("Jon");
         Account account = new Account(c1);
 
-        int newBalance = account.depositAmount(125);
+        int newBalance = account.depositAmount(220);
         System.out.println(String.format("Ny balance: %d", newBalance));
 
-        newBalance = account.depositAmount(325);
+        newBalance = account.withDrawAmount(300);
         System.out.println(String.format("Ny balance: %d", newBalance));
 
+        account.getTransactions();
     }
 }
