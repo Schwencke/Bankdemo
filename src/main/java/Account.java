@@ -1,15 +1,17 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class Account {
-
+    Scanner sc = new Scanner(System.in);
     private List<Transaction> transactions;
     private Customer customer;
 
     public Account(Customer customer) {
         this.transactions = new ArrayList<>();
         this.customer = customer;
+
     }
 
     public Customer getCustomer() {
@@ -17,7 +19,6 @@ public class Account {
     }
 
     public int getBalance(){
-        // TODO: skal debugges
         int sum = 0;
         for (Transaction transaction : transactions) {
             sum += transaction.getAmount();
@@ -26,19 +27,21 @@ public class Account {
     }
 
     public int withDrawAmount(int amount){
+        System.out.print("Du hæver "+ amount+"kr.");
         if (amount > getBalance()){
-            System.out.println("Du har ikke penge nok");
+            System.out.println("Du har ikke penge nok, din saldo er: " + getBalance() + "kr.");
         } else {amount =- amount;
 
         transactions.add(new Transaction(amount, new Date()));
-            return getBalance();
+            System.out.println("\nDin nye saldo er: " + getBalance()+"kr.");
         }
         return getBalance();
     }
 
     public int depositAmount(int amount){
-        // TODO: skal debugges og returnere ny saldo. Smid fejl hvis amount < 0.
+        System.out.println("Du har sat dette beløb ind på din konto: " + amount + "kr.");
         transactions.add(new Transaction(amount, new Date()));
+        System.out.println("Nuværende saldo: "+getBalance());
         return getBalance();
     }
 

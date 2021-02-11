@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -6,13 +7,17 @@ public class Main {
 
         Customer c1 = new Customer("Jon");
         Account account = new Account(c1);
-
-        int newBalance = account.depositAmount(220);
-        System.out.println(String.format("Ny balance: %d", newBalance));
-
-        newBalance = account.withDrawAmount(300);
-        System.out.println(String.format("Ny balance: %d", newBalance));
-
+        account.depositAmount(100);
+        account.depositAmount(150);
+        account.depositAmount(180);
+        account.depositAmount(800);
+        account.depositAmount(313);
+        account.depositAmount(666);
+        account.withDrawAmount(50);
+        account.getBalance();
+        System.out.println("Liste over alle transaktioner");
         account.getTransactions();
+
+       // account.getTransactions();
     }
 }
