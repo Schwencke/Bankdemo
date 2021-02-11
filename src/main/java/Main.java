@@ -14,6 +14,9 @@ public class Main {
         account.depositAmount(313);
         account.depositAmount(666);
         account.withDrawAmount(50);
+        account.withDrawAmount(100);
+        account.withDrawAmount(150);
+        account.withDrawAmount(200);
         account.getBalance();
         System.out.println("Liste over alle transaktioner");
         account.getTransactions();
