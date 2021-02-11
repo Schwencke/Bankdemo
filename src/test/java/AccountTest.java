@@ -46,8 +46,7 @@ class AccountTest {
 
     @Test
     void getTransactions() {
-        account.depositAmount(100);
-        account.withDrawAmount(50);
-        account.getTransactions();
+        assertEquals(1, account.getTransactions().size());
+        assertEquals(100, account.getTransactions().get(0).getAmount());
     }
 }
