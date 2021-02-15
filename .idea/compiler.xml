@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="bankdemo" />
         <module name="bankdemo-main" />
+        <module name="Bankdemo" />
       </profile>
     </annotationProcessing>
   </component>
