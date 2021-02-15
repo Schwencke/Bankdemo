@@ -10,7 +10,7 @@ Vores umiddelbare indtryk er, at han slet ikke har fået lavet unit-tests, og en
 2. Lav et Git Repository og sørg for at skubbe filerne op på jeres egen GitHub konto.
 3. Derefter kan resten af gruppen clone projektet
 4. Kig koden godt igennem og dan jer et indtryk af projektets tilstand. Der er noget test-agtigt kode i Main-klassen. Det er selvfølgelig en utjekket måde at teste på.
-5. Lav nogle test-klasser for Account, Customer og Transaction og lav tests til alle de metoder I kan.
+5. Lav nogle test-klasser for domain.Account, domain.Customer og domain.Transaction og lav tests til alle de metoder I kan.
 6. Gør selve metoderne færdige og bliv ved indtil alle jeres tests lyser grønt.
 7. I er færdige med første runde, når I har kodet alle metoderne færdige og alle tests lyser grønt.
 8. Nu er det op til jer at udvide banken med noget mere funktionalitet. Feks. en metode, som kan udskrive alle transaktioner på en konto etc.

@@ -1,26 +1,30 @@
+import Persistance.Database;
+import Persistance.DbMapper;
+import domain.Account;
+import domain.Customer;
+
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 
+
+
     public static void main(String[] args) {
 
-        Customer c1 = new Customer("Jon");
-        Account account = new Account(c1);
-        account.depositAmount(100);
-        account.depositAmount(150);
-        account.depositAmount(180);
-        account.depositAmount(800);
-        account.depositAmount(313);
-        account.depositAmount(666);
-        account.withDrawAmount(50);
-        account.withDrawAmount(100);
-        account.withDrawAmount(150);
-        account.withDrawAmount(200);
-        account.getBalance();
-        System.out.println("Liste over alle transaktioner");
-        account.getTransactions();
+         final String USER = "bankuser";
+         final String PASSWORD = "Bank123";
+         final String URL = "jdbc:mysql://localhost:3306/bank?serverTimezone=CET&useSSL=false";
 
-       // account.getTransactions();
+         Database database = new Database(USER,PASSWORD,URL);
+         DbMapper dbMapper = new DbMapper(database);
+
+         List<Customer> customerList = dbMapper.viewAllCustomers();
+        for (Customer customer : customerList) {
+            System.out.println(customer.getCustomer_no());
+            System.out.println(customer.getFirst_name());
+            System.out.println(customer.getLast_name());
+
+        }
+
     }
 }
