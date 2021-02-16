@@ -82,8 +82,8 @@ public class MainMenu {
             System.out.println("for at indsætte penge, skal der indtastes et positivt heltal. ");
             mainMenuLoop();
         } else{
-
             if (dbMapper.addTransaction(new Transaction(amount, kontoNr)) != null) {
+                dbMapper.getAccountBalance(kontoNr);
                 System.out.println("du har indsat " + amount + " kr. på din konto");
             }
         }
