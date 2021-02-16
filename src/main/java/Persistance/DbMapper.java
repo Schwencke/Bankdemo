@@ -84,33 +84,18 @@ public class DbMapper {
         return sum;
     }
 
-//    public void balanceUpdate (int kontoNr, int amount){
-//        boolean updated = false;
-//        int newId = 0;
-//        String sql = "select from bank.accounts where acc_no = " + kontoNr;
-//        try (Connection connection = database.connect()) {
-//            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-//                ResultSet rs = ps.executeQuery();
-//                int accNo = rs.getInt("acc_no");
-//                int balance = rs.getInt("balance");
-//                int rowsAffected = ps.executeUpdate();
-//                if (rowsAffected == 1) {
-//                    updated = true;
-//                }
-//
-//                ResultSet resultSet = ps.getGeneratedKeys();
-//                if (resultSet.next()) {
-//                    newId = resultSet.getInt(1);
-//                    transaction.setTransactionNr(newId);
-//                }
-//                else {transaction=null;}
-//            }
-//
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//    }
-
+    public void updateAccountBalance(int kontoNr) {
+        String sql = "update bank.accounts set balance =? where acc_no =?";
+        try (Connection con = database.connect();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1,getAccountBalance(kontoNr));
+            ps.setInt(2,kontoNr);
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+    }
 
 //    public Pizza insertPizza(Pizza pizza){
 //        boolean result = false;

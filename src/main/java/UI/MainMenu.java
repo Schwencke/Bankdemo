@@ -84,6 +84,7 @@ public class MainMenu {
         } else{
             if (dbMapper.addTransaction(new Transaction(amount, kontoNr)) != null) {
                 dbMapper.getAccountBalance(kontoNr);
+                dbMapper.updateAccountBalance(kontoNr);
                 System.out.println("du har indsat " + amount + " kr. på din konto");
             }
         }
