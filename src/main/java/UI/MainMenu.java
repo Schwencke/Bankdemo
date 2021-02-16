@@ -22,26 +22,48 @@ public class MainMenu {
         while (running) {
             showMainMenu();
             int valg = Input.getInt("");
-            switch (valg){
+            switch (valg) {
                 case 1:
-                    System.out.println("du valgte et");
-                break;
+                    System.out.println("du valgte 1: hæv penge");
+
+                    break;
+                case 2:
+                    System.out.println("du valgte 2: kontoudskrift");
+
+                    break;
+                case 3:
+                    System.out.println("du valgte 3: overfør penge mellem konti");
+
+                    break;
+                case 4:
+                    System.out.println("du valgte 0: afslut");
+                    running=false;
+                    break;
+                default:
+                    System.out.println("Din indtastning svarede ikke til en valgmulighed");
 
 
             }
 
-
-            //    List<Customer> customerList = dbMapper.viewAllCustomers();
-//    for (Customer customer :customerList) {
-//        System.out.println(customer.getCustomer_no());
-//        System.out.println(customer.getFirst_name());
-//        System.out.println(customer.getLast_name());
-//        }
         }
     }
 
     private void showMainMenu() {
         System.out.println("Hovedmenu:");
+        System.out.println("Du har følgende valgmligheder:");
+        System.out.println("1: hæv penge");
+        System.out.println("2: kontoudskrift");
+        System.out.println("3: overfør penge mellem konti");
+        System.out.println("0: afslut");
 
     }
+
+// mangler vi ikke en usecase for at udskrive en liste over alle kunder?
+
+    //    List<Customer> customerList = dbMapper.viewAllCustomers();
+//    for (Customer customer :customerList) {
+//        System.out.println(customer.getCustomer_no());
+//        System.out.println(customer.getFirst_name());
+//        System.out.println(customer.getLast_name());
+//        }
 }
