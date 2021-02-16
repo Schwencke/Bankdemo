@@ -1,6 +1,7 @@
 package Persistance;
 
 import Persistance.Database;
+import domain.Account;
 import domain.Customer;
 
 import java.sql.*;
@@ -34,7 +35,30 @@ public class DbMapper {
         return customerList;
     }
 
-//    public Pizza insertPizza(Pizza pizza){
+    public void newAccount(int customerID)
+    {
+        boolean result = false;
+        String sql = "insert into accounts (balance, owner_id) values (?,?)";
+        try (Connection connection = database.connect()) {
+           try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS )) {
+            ps.setInt(1, 0);
+            ps.setInt(2, customerID);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected >= 1)
+            {
+                result = true;
+            }
+            }
+        } catch (SQLException e){
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+   // public Pizza insertPizza(Pizza pizza){
 //        boolean result = false;
 //        int newId = 0;
 //        String sql = "insert into pizza (pizza_no, name, ingredients, price) values (?,?,?,?)";
@@ -63,4 +87,7 @@ public class DbMapper {
 //        }
 //        return pizza;
 //    }
-}
+
+
+
+

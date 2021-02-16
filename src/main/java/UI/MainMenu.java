@@ -35,7 +35,10 @@ public class MainMenu {
                     System.out.println("du valgte 3: overfør penge mellem konti");
 
                     break;
-                case 4:
+                case 9:
+                    newAcc(Input.getInt("Hvad er dit kundenr?"));
+                    break;
+                case 0:
                     System.out.println("du valgte 0: afslut");
                     running=false;
                     break;
@@ -56,6 +59,18 @@ public class MainMenu {
         System.out.println("3: overfør penge mellem konti");
         System.out.println("0: afslut");
 
+    }
+
+    private void newAcc (int customerID)
+    {
+        List<Customer> customerList = dbMapper.viewAllCustomers();
+        for (Customer customer : customerList) {
+            if (customerID == customer.getCustomer_no()){
+                dbMapper.newAccount(customer.getCustomer_no());
+                System.out.println("En konto blev oprettet");
+            }
+
+        }
     }
 
 // mangler vi ikke en usecase for at udskrive en liste over alle kunder?
