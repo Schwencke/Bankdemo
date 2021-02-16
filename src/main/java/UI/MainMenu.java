@@ -43,7 +43,7 @@ public class MainMenu {
                     break;
                 case 0:
                     System.out.println("du valgte 0: afslut");
-                    running=false;
+                    running = false;
                     break;
                 default:
                     System.out.println("Din indtastning svarede ikke til en valgmulighed");
@@ -74,12 +74,21 @@ public class MainMenu {
 //        System.out.println(customer.getLast_name());
 //        }
     public void depositAmount() {
-        dbMapper.addTransaction(new Transaction(300,1));
+//        dbMapper.addTransaction(new Transaction(300, 1));
+        int kontoNr = Input.getInt("indtast kontonummer: ");
 
+        int amount = Input.getInt("hvor meget ønsker du at indsætte: ");
+        if (amount <=0){
+            System.out.println("for at indsætte penge, skal der indtastes et positivt heltal. ");
+            mainMenuLoop();
+        } else{
 
-//        System.out.println("Du har sat dette beløb ind på din konto: " + amount + "kr.");
-//        transactions.add(new Transaction(amount, new Date()));
-//        System.out.println("Nuværende saldo: " + getBalance());
+            if (dbMapper.addTransaction(new Transaction(amount, kontoNr)) != null) {
+                System.out.println("du har indsat " + amount + " kr. på din konto");
+            }
+        }
+//                System.out.println("\nDin nye saldo er: " + getBalance() + "kr.");
+
 
     }
 }
