@@ -21,40 +21,83 @@ public class MainMenu {
 
         boolean running = true;
         while (running) {
-            showMainMenu();
-            int valg = Input.getInt("Indtast dit valg: ");
-            switch (valg) {
+            int token = Input.getInt("Tryk 1 for kundelogin, 2 for rådgiverlogin eller 0 for at afslutte ");
+            switch (token) {
                 case 1:
-                    System.out.println("du valgte 1: indsæt penge");
-                    depositAmount();
+                    System.out.println("Du har valgt kundelogin");
+            showMainMenuKunde();
+                    int valg = Input.getInt("Indtast dit valg: ");
+                    switch (valg) {
+                        case 1:
+                            System.out.println("du valgte 1: indsæt penge");
+                            depositAmount();
+                            break;
+                        case 2:
+                            System.out.println("du valgte 2: hæv penge");
 
+                            break;
+                        case 3:
+                            System.out.println("du valgte 3: vis kontoudskrift");
+
+                            break;
+                        case 4:
+                            System.out.println("du valgte 4: overfør penge mellem konti");
+
+                            break;
+                        case 0:
+                            System.out.println("du valgte 0: afslut");
+                            break;
+                        default:
+                            System.out.println("Din indtastning svarede ikke til en valgmulighed");
+                            break;
+                    }
                     break;
                 case 2:
-                    System.out.println("du valgte 2: hæv penge");
+                    System.out.println("Du valge banklogin");
+                    showMainMenuBank();
+                    int bankvalg = Input.getInt("Vælg menu ");
+                    switch (bankvalg){
+                case 1:
+                    System.out.println("du valgte 1: hæv penge");
+                    break;
+                case 2:
+                    System.out.println("du valgte 2: vis kontoudskrift");
 
                     break;
                 case 3:
-                    System.out.println("du valgte 3: vis kontoudskrift");
-
-                    break;
-                case 4:
-                    System.out.println("du valgte 4: overfør penge mellem konti");
-
+                    System.out.println("du valgte 3: overfør penge mellem konti");
                     break;
                 case 0:
                     System.out.println("du valgte 0: afslut");
-                    running = false;
                     break;
                 default:
                     System.out.println("Din indtastning svarede ikke til en valgmulighed");
-
-
+                    break;
+                    }
+                    break;
+                case 0:
+                    running=false;
+                    break;
+                default:
+                    System.out.println("Din indtastning svarede ikke til en valgmulighed");
+                    break;
             }
+
 
         }
     }
 
-    private void showMainMenu() {
+    private void showMainMenuKunde() {
+        System.out.println("Hovedmenu:");
+        System.out.println("Du har følgende valgmligheder:");
+        System.out.println("1: indsæt penge");
+        System.out.println("2: hæv penge");
+        System.out.println("3: kontoudskrift");
+        System.out.println("4: overfør penge mellem konti");
+        System.out.println("0: afslut");
+
+    }
+    private void showMainMenuBank() {
         System.out.println("Hovedmenu:");
         System.out.println("Du har følgende valgmligheder:");
         System.out.println("1: indsæt penge");
