@@ -21,21 +21,25 @@ public class MainMenu {
         boolean running = true;
         while (running) {
             showMainMenu();
-            int valg = Input.getInt("");
+            int valg = Input.getInt("Indtast dit valg: ");
             switch (valg) {
                 case 1:
-                    System.out.println("du valgte 1: hæv penge");
+                    System.out.println("du valgte 1: indsæt penge");
 
                     break;
                 case 2:
-                    System.out.println("du valgte 2: kontoudskrift");
+                    System.out.println("du valgte 2: hæv penge");
 
                     break;
                 case 3:
-                    System.out.println("du valgte 3: overfør penge mellem konti");
+                    System.out.println("du valgte 3: vis kontoudskrift");
 
                     break;
                 case 4:
+                    System.out.println("du valgte 4: overfør penge mellem konti");
+
+                    break;
+                case 0:
                     System.out.println("du valgte 0: afslut");
                     running=false;
                     break;
@@ -51,9 +55,10 @@ public class MainMenu {
     private void showMainMenu() {
         System.out.println("Hovedmenu:");
         System.out.println("Du har følgende valgmligheder:");
-        System.out.println("1: hæv penge");
-        System.out.println("2: kontoudskrift");
-        System.out.println("3: overfør penge mellem konti");
+        System.out.println("1: indsæt penge");
+        System.out.println("2: hæv penge");
+        System.out.println("3: kontoudskrift");
+        System.out.println("4: overfør penge mellem konti");
         System.out.println("0: afslut");
 
     }
