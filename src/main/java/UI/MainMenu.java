@@ -3,6 +3,7 @@ package UI;
 import Persistance.Database;
 import Persistance.DbMapper;
 import domain.Customer;
+import domain.Transaction;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class MainMenu {
             switch (valg) {
                 case 1:
                     System.out.println("du valgte 1: indsæt penge");
+                    depositAmount();
 
                     break;
                 case 2:
@@ -71,4 +73,13 @@ public class MainMenu {
 //        System.out.println(customer.getFirst_name());
 //        System.out.println(customer.getLast_name());
 //        }
+    public void depositAmount() {
+        dbMapper.addTransaction(new Transaction(300,1));
+
+
+//        System.out.println("Du har sat dette beløb ind på din konto: " + amount + "kr.");
+//        transactions.add(new Transaction(amount, new Date()));
+//        System.out.println("Nuværende saldo: " + getBalance());
+
+    }
 }

@@ -33,18 +33,18 @@ public class Account {
             System.out.println("Du har ikke penge nok, din saldo er: " + getBalance() + "kr.");
         } else {
             amount = -amount;
-            transactions.add(new Transaction(amount, new Date()));
+//            transactions.add(new Transaction(amount, new Date()));
             System.out.println("\nDin nye saldo er: " + getBalance() + "kr.");
         }
         return getBalance();
     }
 
-    public int depositAmount(int amount) {
-        System.out.println("Du har sat dette beløb ind på din konto: " + amount + "kr.");
-        transactions.add(new Transaction(amount, new Date()));
-        System.out.println("Nuværende saldo: " + getBalance());
-        return getBalance();
-    }
+//    public int depositAmount(int amount) {
+//        System.out.println("Du har sat dette beløb ind på din konto: " + amount + "kr.");
+////        transactions.add(new Transaction(amount, new Date()));
+//        System.out.println("Nuværende saldo: " + getBalance());
+//        return getBalance();
+//    }
 
     public List<Transaction> getTransactions() {
         for (Transaction transaction : transactions) {

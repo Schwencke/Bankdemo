@@ -2,6 +2,7 @@ package Persistance;
 
 import Persistance.Database;
 import domain.Customer;
+import domain.Transaction;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,6 +33,36 @@ public class DbMapper {
             e.printStackTrace();
         }
         return customerList;
+    }
+
+    public Transaction addTransaction(Transaction transaction) {
+
+        boolean updated = false;
+        int newId = 0;
+        String sql = "insert into transactions (account_no, amount, transaction_date) values(?,?,NOW())";
+        try (Connection connection = database.connect()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setInt(2, transaction.getAccount_no());
+                ps.setInt(1, transaction.getAmount());
+
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected == 1) {
+                    updated = true;
+                }
+
+                ResultSet resultSet = ps.getGeneratedKeys();
+                if (resultSet.next()) {
+                    newId = resultSet.getInt(1);
+                    transaction.setTransactionNr(newId);
+                }
+                else {transaction=null;}
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return transaction;
+
     }
 
 
