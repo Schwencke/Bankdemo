@@ -1,6 +1,7 @@
 package Persistance;
 
 import Persistance.Database;
+import domain.Account;
 import domain.Customer;
 
 import java.sql.*;
@@ -32,6 +33,27 @@ public class DbMapper {
             e.printStackTrace();
         }
         return customerList;
+    }
+
+
+    public List<Account> viewAllCustomersWithBalance()
+    {
+        List<Account> accountList = new ArrayList<>();
+        String sql = "select * from bank.accounts where balance>=0 ";
+        try (Connection con = database.connect();
+             PreparedStatement ps = con.prepareStatement(sql)){
+            ResultSet resultSet = ps.executeQuery();
+            System.out.println("\n");
+            while (resultSet.next()){
+                int accNo = resultSet.getInt("acc_no");
+                int balance = resultSet.getInt("balance");
+                accountList.add(new Account(accNo,balance));
+            }
+        } catch (SQLException e){
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+        return accountList;
     }
 
 //    public Pizza insertPizza(Pizza pizza){

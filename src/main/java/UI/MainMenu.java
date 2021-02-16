@@ -2,7 +2,9 @@ package UI;
 
 import Persistance.Database;
 import Persistance.DbMapper;
+import domain.Account;
 import domain.Customer;
+import domain.Transaction;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class MainMenu {
 
     Database database = new Database(USER, PASSWORD, URL);
     DbMapper dbMapper = new DbMapper(database);
+    Account account;
 
     public void mainMenuLoop() {
         System.out.println("Velkommen til Ebberød Banks IT-System ");
@@ -34,10 +37,19 @@ public class MainMenu {
                 case 3:
                     System.out.println("du valgte 3: overfør penge mellem konti");
 
+                    System.out.println("Vælg kunde som du vil hæve fra: " + dbMapper.viewAllCustomersWithBalance().toString());
+                    int hæv = Input.getInt("");
+                    System.out.println("Hvor meget vil du hæve? ");
+                    int hævBeløb=Input.getInt("");
+                    account.withDrawAmount(hævBeløb);
+                    System.out.println("Vælg kunde som du vil indsætte til: " + dbMapper.viewAllCustomers());
+                    int indsæt = Input.getInt("");
+
+
                     break;
                 case 4:
                     System.out.println("du valgte 0: afslut");
-                    running=false;
+                    running = false;
                     break;
                 default:
                     System.out.println("Din indtastning svarede ikke til en valgmulighed");

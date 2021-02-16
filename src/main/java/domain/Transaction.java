@@ -6,10 +6,14 @@ public class Transaction {
 
     private int amount;
     private Date date;
+    private int accNo;
+
+    Account account;
 
     public Transaction(int amount, Date date) {
         this.amount = amount;
         this.date = date;
+        this.accNo=account.getAccNo();
     }
 
     public int getAmount() {
