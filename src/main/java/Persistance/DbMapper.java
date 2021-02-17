@@ -90,7 +90,7 @@ public class DbMapper {
     public Transaction addTransaction(Transaction transaction) {
         boolean updated = false;
         int newId = 0;
-        String sql = "insert into transactions (account_no, amount, transaction_date) values(?,?,NOW())";
+        String sql = "insert into transactions (account_no, amount) values(?,?)";
         try (Connection connection = database.connect()) {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setInt(1, transaction.getAccount_no());
@@ -124,7 +124,6 @@ public class DbMapper {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 sum = resultSet.getInt(1);
-                System.out.println(sum);
             }
         } catch (SQLException e) {
             System.out.println("Fejl i connection til databasen");

@@ -27,7 +27,7 @@ public class MainMenu {
             switch (token) {
                 case 1:
                     System.out.println("Du har valgt kundelogin");
-            showMainMenuKunde();
+                    showMainMenuKunde();
                     int valg = Input.getInt("Indtast dit valg: ");
                     switch (valg) {
                         case 1:
@@ -36,7 +36,7 @@ public class MainMenu {
                             break;
                         case 2:
                             System.out.println("du valgte 2: hæv penge");
-
+                            withdrawAmount();
                             break;
                         case 3:
                             System.out.println("du valgte 3: vis kontoudskrift");
@@ -44,7 +44,6 @@ public class MainMenu {
                             break;
                         case 4:
                             System.out.println("du valgte 4: overfør penge mellem konti");
-
                             break;
                         case 0:
                             System.out.println("du valgte 0: afslut");
@@ -58,46 +57,45 @@ public class MainMenu {
                     System.out.println("Du valge banklogin");
                     showMainMenuBank();
                     int bankvalg = Input.getInt("Vælg menu ");
-                    switch (bankvalg){
-                case 1:
-                    System.out.println("du valgte 1: indsæt penge");
-                    break;
-                case 2:
-                    System.out.println("du valgte 2: hæv penge");
-                    break;
-                case 3:
-                    System.out.println("du valgte 3: overfør penge mellem konti");
+                    switch (bankvalg) {
+                        case 1:
+                            System.out.println("du valgte 1: indsæt penge");
+                            break;
+                        case 2:
+                            System.out.println("du valgte 2: hæv penge");
+                            break;
+                        case 3:
+                            System.out.println("du valgte 3: overfør penge mellem konti");
 
-                    System.out.println("Vælg kunde som du vil hæve fra: " + dbMapper.viewAllCustomersWithBalance().toString());
-                    int hæv = Input.getInt("");
-                    System.out.println("Hvor meget vil du hæve? ");
-                    int hævBeløb=Input.getInt("");
+                            System.out.println("Vælg kunde som du vil hæve fra: " + dbMapper.viewAllCustomersWithBalance().toString());
+                            int hæv = Input.getInt("");
+                            System.out.println("Hvor meget vil du hæve? ");
+                            int hævBeløb = Input.getInt("");
 
-                    System.out.println("Vælg kunde som du vil indsætte til: " + dbMapper.viewAllCustomers());
-                    int indsæt = Input.getInt("");
+                            System.out.println("Vælg kunde som du vil indsætte til: " + dbMapper.viewAllCustomers());
+                            int indsæt = Input.getInt("");
 
 
-                    System.out.println("du valgte 3: kontoudskrift");
-                    break;
-                    case 4:
+                            System.out.println("du valgte 3: kontoudskrift");
+                            break;
+                        case 4:
                             System.out.println("Du valgte 4: overfør mellem konti");
                             break;
                         case 5:
                             System.out.println("Du valgte 5: opret ny konto til kunde");
                             createNewAcc();
                             break;
-
-                case 0:
-                    System.out.println("du valgte 0: afslut");
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Din indtastning svarede ikke til en valgmulighed");
-                    break;
+                        case 0:
+                            System.out.println("du valgte 0: afslut");
+                            running = false;
+                            break;
+                        default:
+                            System.out.println("Din indtastning svarede ikke til en valgmulighed");
+                            break;
                     }
                     break;
                 case 0:
-                    running=false;
+                    running = false;
                     break;
                 default:
                     System.out.println("Din indtastning svarede ikke til en valgmulighed");
@@ -118,6 +116,7 @@ public class MainMenu {
         System.out.println("0: afslut");
 
     }
+
     private void showMainMenuBank() {
         System.out.println("Hovedmenu:");
         System.out.println("Du har følgende valgmligheder:");
@@ -150,33 +149,45 @@ public class MainMenu {
 //        System.out.println(customer.getFirst_name());
 //        System.out.println(customer.getLast_name());
 //        }
+
     public void depositAmount() {
 //        dbMapper.addTransaction(new Transaction(300, 1));
         int kontoNr = Input.getInt("indtast kontonummer: ");
-
         int amount = Input.getInt("hvor meget ønsker du at indsætte: ");
-        if (amount <=0){
+        if (amount <= 0) {
             System.out.println("for at indsætte penge, skal der indtastes et positivt heltal. ");
-            mainMenuLoop();
-        } else{
-            if (dbMapper.addTransaction(new Transaction(amount, kontoNr)) != null) {
-                dbMapper.getAccountBalance(kontoNr);
+            depositAmount();
+        } else {
+            if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
                 dbMapper.updateAccountBalance(kontoNr);
                 System.out.println("du har indsat " + amount + " kr. på din konto");
             }
         }
 //                System.out.println("\nDin nye saldo er: " + getBalance() + "kr.");
-
-
     }
 
-    public void createNewAcc()
-    {
-        int kundenr = Input.getInt("Hvilke kunde skal have ny konto?: ");
 
-        if (dbMapper.newAccount(kundenr) !=0){
+    public void withdrawAmount() {
+        int kontoNr = Input.getInt("indtast kontonummer: ");
+        int amount = Input.getInt("hvor meget ønsker du at hæve: ");
+        int printamount=amount;
+        amount = -amount;
+        if (amount >= 0) {
+            System.out.println("for at hæve penge, skal der indtastes et heltal. ");
+            withdrawAmount();
+        } else {
+            if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
+                dbMapper.updateAccountBalance(kontoNr);
+                System.out.println("du har hævet " + printamount + " kr. på din konto");
+            }
+        }
+    }
+
+    public void createNewAcc() {
+        int kundenr = Input.getInt("Hvilke kunde skal have ny konto?: ");
+        if (dbMapper.newAccount(kundenr) != 0) {
             int accNo = dbMapper.newAccount(kundenr);
-            System.out.println("En ny konto til kunden med nr: "+ accNo +" blev oprettet");
+            System.out.println("En ny konto til kunden med nr: " + accNo + " blev oprettet");
         } else System.out.println("fejlen opstod fordi funktionen retunere 0");
     }
 }

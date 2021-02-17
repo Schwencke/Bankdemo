@@ -32,7 +32,7 @@ public class Account {
     public Customer getCustomer() {
         return customer;
     }
-    
+
     public Account() {
     }
 
