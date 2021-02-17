@@ -21,7 +21,6 @@ public class MainMenu {
     public void mainMenuLoop() {
         System.out.println("Velkommen til Ebberød Banks IT-System ");
 
-
         boolean running = true;
         while (running) {
             int token = Input.getInt("Tryk 1 for kundelogin, 2 for rådgiverlogin eller 0 for at afslutte ");
@@ -78,23 +77,21 @@ public class MainMenu {
                                 case 2:
                                     System.out.println("du valgte 2: hæv penge");
                                     break;
+
                                 case 3:
                                     System.out.println("du valgte 3: overfør penge mellem konti");
-
                                     System.out.println("Vælg kunde som du vil hæve fra: " + dbMapper.viewAllCustomersWithBalance().toString());
                                     int hæv = Input.getInt("");
                                     System.out.println("Hvor meget vil du hæve? ");
                                     int hævBeløb = Input.getInt("");
-
                                     System.out.println("Vælg kunde som du vil indsætte til: " + dbMapper.viewAllCustomers());
                                     int indsæt = Input.getInt("");
-
-
                                     System.out.println("du valgte 3: kontoudskrift");
                                     break;
-                                case 4:
 
+                                case 4:
                                     System.out.println("Du valgte 4: overfør mellem konti");
+                                    changeAccountBank();
                                     break;
                                 case 5:
                                     System.out.println("Du valgte 5: opret ny konto til kunde");
@@ -121,6 +118,7 @@ public class MainMenu {
             }
         }
     }
+
     private void showMainMenuKunde() {
         System.out.println("Hovedmenu:");
         System.out.println("Du har følgende valgmligheder:");
@@ -152,8 +150,7 @@ public class MainMenu {
 //                dbMapper.newAccount(customer.getCustomer_no());
 //                System.out.println("En konto blev oprettet");
 //            }
-//
-//        }
+////        }
 //    }
 
 // mangler vi ikke en usecase for at udskrive en liste over alle kunder?
@@ -181,11 +178,10 @@ public class MainMenu {
 //                System.out.println("\nDin nye saldo er: " + getBalance() + "kr.");
     }
 
-
     public void withdrawAmount() {
         int kontoNr = Input.getInt("indtast kontonummer: ");
         int amount = Input.getInt("hvor meget ønsker du at hæve: ");
-        int printamount=amount;
+        int printamount = amount;
         amount = -amount;
         if (amount >= 0) {
             System.out.println("for at hæve penge, skal der indtastes et heltal. ");
@@ -213,29 +209,30 @@ public class MainMenu {
         transactionList = dbMapper.getTransactionForAccNo(acc_no);
         for (Transaction transaction : transactionList) {
             System.out.println("Printer transaktionsliste for kontonr: " + acc_no);
-            System.out.print("Transaktions ID:" + transaction.getTransactionNr()+"");
+            System.out.print("Transaktions ID:" + transaction.getTransactionNr() + "");
             System.out.print(" Beløb:" + transaction.getAmount());
             System.out.println(" Dato: " + transaction.getDate());
 
         }
     }
+
     public void listBankTransactions() {
         int acc_no = Input.getInt("Hvilken kunde vil du se kontoudskrift for?: ");
         List<Transaction> transactionList;
         transactionList = dbMapper.getTransactionForAccNo(acc_no);
         for (Transaction transaction : transactionList) {
             System.out.println("Printer transaktionsliste for kontonr: " + acc_no);
-            System.out.print("Transaktions ID:" + transaction.getTransactionNr()+"");
+            System.out.print("Transaktions ID:" + transaction.getTransactionNr() + "");
             System.out.print(" Beløb:" + transaction.getAmount());
             System.out.println(" Dato: " + transaction.getDate());
 
         }
     }
 
-    public void changeAccount(){
+    public void changeAccount() {
         int kontoNr = Input.getInt("indtast kontonummer du vil hæve fra: ");
         int amount = Input.getInt("hvor meget ønsker du at hæve: ");
-        int printamount=amount;
+        int printamount = amount;
         amount = -amount;
         int newAccount = Input.getInt("Hvilken konto vil du indsætte til? ");
         if (amount >= 0) {
@@ -244,12 +241,30 @@ public class MainMenu {
         } else {
             if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
                 dbMapper.updateAccountBalance(kontoNr);
-                dbMapper.addTransaction(new Transaction(newAccount,printamount));
+                dbMapper.addTransaction(new Transaction(newAccount, printamount));
                 dbMapper.updateAccountBalance(newAccount);
-                System.out.println("du har hævet " + printamount + " kr. på konto "+ kontoNr +" og indsat "+printamount +" på konti "+newAccount);
+                System.out.println("du har hævet " + printamount + " kr. på konto " + kontoNr + " og indsat " + printamount + " på konti " + newAccount);
             }
         }
-
-
     }
+
+    public void changeAccountBank() {
+        int kontoNr = Input.getInt("indtast kontonummer du vil hæve fra: ");
+        int amount = Input.getInt("hvor meget ønsker du at hæve: ");
+        int printamount = amount;
+        amount = -amount;
+        if (amount >= 0) {
+            System.out.println("for at hæve penge, skal der indtastes et heltal. ");
+            changeAccount();
+        } else {
+            int newAccount = Input.getInt("Hvilken konto vil du indsætte til? ");
+            if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
+                dbMapper.updateAccountBalance(kontoNr);
+                dbMapper.addTransaction(new Transaction(newAccount, printamount));
+                dbMapper.updateAccountBalance(newAccount);
+                System.out.println("du har hævet " + printamount + " kr. på konto " + kontoNr + " og indsat " + printamount + " på konti " + newAccount);
+            }
+        }
+    }
+
 }
