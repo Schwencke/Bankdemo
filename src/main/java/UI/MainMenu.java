@@ -23,7 +23,7 @@ public class MainMenu {
 
         boolean running = true;
         while (running) {
-            int token = Input.getInt("Tryk 1 for kundelogin, 2 for rådgiverlogin eller 0 for at afslutte ");
+            int token = Input.getInt("Tryk 1 for kundelogin, 2 for rådgiverlogin eller 0 for at afslutte: ");
             switch (token) {
                 case 1:
                     System.out.println("Du har valgt kundelogin");
@@ -57,7 +57,7 @@ public class MainMenu {
                 case 2:
                     System.out.println("Du valge banklogin");
                     showMainMenuBank();
-                    int bankvalg = Input.getInt("Vælg menu ");
+                    int bankvalg = Input.getInt("Indtast dit valg: ");
                     switch (bankvalg) {
                         case 1:
                             System.out.println("du valgte 1: indsæt penge");
@@ -69,51 +69,52 @@ public class MainMenu {
                             System.out.println("du valgte 3: kontoudskrift");
                             listBankTransactions();
                             break;
+
+
+//                                    System.out.println("du valgte 3: overfør penge mellem konti");
+//                                    System.out.println("Vælg kunde som du vil hæve fra: " + dbMapper.viewAllCustomersWithBalance().toString());
+//                                    int hæv = Input.getInt("");
+//                                    System.out.println("Hvor meget vil du hæve? ");
+//                                    int hævBeløb = Input.getInt("");
+//                                    System.out.println("Vælg kunde som du vil indsætte til: " + dbMapper.viewAllCustomers());
+//                                    int indsæt = Input.getInt("");
+//                                    System.out.println("du valgte 3: kontoudskrift");
+//                                    break;
+
                         case 4:
-                            switch (bankvalg) {
-                                case 1:
-                                    System.out.println("du valgte 1: indsæt penge");
-                                    break;
-                                case 2:
-                                    System.out.println("du valgte 2: hæv penge");
-                                    break;
+                            System.out.println("Du valgte 4: overfør mellem konti");
+                            changeAccountBank();
+                            break;
+                        case 5:
+                            System.out.println("Du valgte 5: opret ny konto til kunde");
+                            createNewAcc();
+                            break;
+                        case 6:
+                            System.out.println("Du valgte 6: opret ny kunde");
+                            Customer testCustomer = dbMapper.addCustomer(new Customer("testkunde", "efternavn"));
+                            break;
 
-                                case 3:
-                                    System.out.println("du valgte 3: overfør penge mellem konti");
-                                    System.out.println("Vælg kunde som du vil hæve fra: " + dbMapper.viewAllCustomersWithBalance().toString());
-                                    int hæv = Input.getInt("");
-                                    System.out.println("Hvor meget vil du hæve? ");
-                                    int hævBeløb = Input.getInt("");
-                                    System.out.println("Vælg kunde som du vil indsætte til: " + dbMapper.viewAllCustomers());
-                                    int indsæt = Input.getInt("");
-                                    System.out.println("du valgte 3: kontoudskrift");
-                                    break;
-
-                                case 4:
-                                    System.out.println("Du valgte 4: overfør mellem konti");
-                                    changeAccountBank();
-                                    break;
-                                case 5:
-                                    System.out.println("Du valgte 5: opret ny konto til kunde");
-                                    createNewAcc();
-                                    break;
-                                case 0:
-                                    System.out.println("du valgte 0: afslut");
-                                    running = false;
-                                    break;
-                                default:
-                                    System.out.println("Din indtastning svarede ikke til en valgmulighed");
-                                    break;
-                            }
+                        case 7:
+                            System.out.println("Du valgte 7: slet kunde fra kundekartotek");
+                            dbMapper.deleteCustomer(Input.getInt("indtast kundenummer for den kunde du ønsker at slette: "));
                             break;
                         case 0:
+                            System.out.println("du valgte 0: afslut");
                             running = false;
                             break;
                         default:
                             System.out.println("Din indtastning svarede ikke til en valgmulighed");
                             break;
                     }
+                    break;
+                case 0:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Din indtastning svarede ikke til en valgmulighed");
+                    break;
             }
+
         }
     }
 
@@ -135,6 +136,8 @@ public class MainMenu {
         System.out.println("3: kontoudskrift");
         System.out.println("4: overfør penge mellem konti");
         System.out.println("5: opret ny konto til kunde");
+        System.out.println("6: opret ny kunde (test)");
+        System.out.println("7: slet kunde fra kartotek(test)");
         System.out.println("0: afslut");
     }
 
@@ -151,7 +154,7 @@ public class MainMenu {
 
 // mangler vi ikke en usecase for at udskrive en liste over alle kunder?
 
-    //    List<Customer> customerList = dbMapper.viewAllCustomers();
+//    List<Customer> customerList = dbMapper.viewAllCustomers();
 //    for (Customer customer :customerList) {
 //        System.out.println(customer.getCustomer_no());
 //        System.out.println(customer.getFirst_name());
