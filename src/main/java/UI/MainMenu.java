@@ -44,6 +44,7 @@ public class MainMenu {
                             break;
                         case 4:
                             System.out.println("du valgte 4: overfør penge mellem konti");
+                            changeAccount();
                             break;
                         case 0:
                             System.out.println("du valgte 0: afslut");
@@ -190,4 +191,27 @@ public class MainMenu {
             System.out.println("En ny konto til kunden med nr: " + accNo + " blev oprettet");
         } else System.out.println("fejlen opstod fordi funktionen retunere 0");
     }
+
+    public void changeAccount(){
+        int kontoNr = Input.getInt("indtast kontonummer du vil hæve fra: ");
+        int amount = Input.getInt("hvor meget ønsker du at hæve: ");
+        int printamount=amount;
+        amount = -amount;
+        int newAccount = Input.getInt("Hvilken konto vil du indsætte til? ");
+        if (amount >= 0) {
+            System.out.println("for at hæve penge, skal der indtastes et heltal. ");
+            changeAccount();
+        } else {
+            if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
+                dbMapper.updateAccountBalance(kontoNr);
+                dbMapper.addTransaction(new Transaction(newAccount,printamount));
+                dbMapper.updateAccountBalance(newAccount);
+                System.out.println("du har hævet " + printamount + " kr. på konto "+ kontoNr +" og indsat "+printamount +" på konti "+newAccount);
+            }
+        }
+
+
+    }
+
+
 }
