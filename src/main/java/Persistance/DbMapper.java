@@ -44,8 +44,8 @@ public class DbMapper {
         String sql = "insert into transactions (account_no, amount, transaction_date) values(?,?,NOW())";
         try (Connection connection = database.connect()) {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setInt(2, transaction.getAccount_no()); //TODO: er dette korrekt?
-                ps.setInt(1, transaction.getAmount());
+                ps.setInt(1, transaction.getAccount_no());
+                ps.setInt(2, transaction.getAmount());
 
                 int rowsAffected = ps.executeUpdate();
                 if (rowsAffected == 1) {
