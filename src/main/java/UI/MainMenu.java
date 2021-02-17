@@ -58,15 +58,20 @@ public class MainMenu {
                     int bankvalg = Input.getInt("Vælg menu ");
                     switch (bankvalg){
                 case 1:
-                    System.out.println("du valgte 1: hæv penge");
+                    System.out.println("du valgte 1: indsæt penge");
                     break;
                 case 2:
-                    System.out.println("du valgte 2: vis kontoudskrift");
-
+                    System.out.println("du valgte 2: hæv penge");
                     break;
                 case 3:
-                    System.out.println("du valgte 3: overfør penge mellem konti");
+                    System.out.println("du valgte 3: kontoudskrift");
                     break;
+                    case 4:
+                            System.out.println("Du valgte 4: overfør mellem konti");
+                            break;
+                        case 5:
+                            System.out.println("Du valgte 5: opret ny konto til kunde");
+                            break;
 
                 case 0:
                     System.out.println("du valgte 0: afslut");
@@ -105,6 +110,7 @@ public class MainMenu {
         System.out.println("2: hæv penge");
         System.out.println("3: kontoudskrift");
         System.out.println("4: overfør penge mellem konti");
+        System.out.println("5: opret ny konto til kunde");
         System.out.println("0: afslut");
 
     }
