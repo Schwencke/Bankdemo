@@ -5,6 +5,7 @@ import Persistance.DbMapper;
 import domain.Customer;
 import domain.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenu {
@@ -38,7 +39,7 @@ public class MainMenu {
                             break;
                         case 3:
                             System.out.println("du valgte 3: vis kontoudskrift");
-
+                            listCustomerTransactions();
                             break;
                         case 4:
                             System.out.println("du valgte 4: overfør penge mellem konti");
@@ -164,5 +165,20 @@ public class MainMenu {
             int accNo = dbMapper.newAccount(kundenr);
             System.out.println("En ny konto til kunden med nr: "+ accNo +" blev oprettet");
         } else System.out.println("fejlen opstod fordi funktionen retunere 0");
+    }
+
+    public void listCustomerTransactions()
+    {
+        // transaktioner vises for kunde 1, da der ikke er et loginsystem til forskellige kunder
+        int acc_no = 1;
+        List<Transaction> transactionList = new ArrayList<>();
+        transactionList = dbMapper.getTransactionForAccNo(acc_no);
+        for (Transaction transaction : transactionList) {
+            System.out.println("Printer transaktionsliste for kontonr: " + acc_no);
+            System.out.print("Transaktions ID:" + transaction.getTransactionNr()+"");
+            System.out.print(" Beløb:" + transaction.getAmount());
+            System.out.println(" Dato: " + transaction.getDate());
+
+        }
     }
 }

@@ -21,6 +21,16 @@ public class Transaction {
         this.date = date;
     }
 
+    public Transaction(int transactionNr, int amount, Timestamp date) {
+        this.transactionNr = transactionNr;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
     public void setTransactionNr(int transactionNr) {
         this.transactionNr = transactionNr;
     }
@@ -31,10 +41,6 @@ public class Transaction {
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public void setDate(Timestamp date) {
-        this.date = date;
     }
 
     public int getTransactionNr() {
@@ -49,9 +55,6 @@ public class Transaction {
         return amount;
     }
 
-    public Date getDate() {
-        return date;
-    }
 
     @Override
     public String toString() {

@@ -68,6 +68,26 @@ public class DbMapper {
 
     }
 
+    public List<Transaction> getTransactionForAccNo (int kontoNr)
+    {
+        List<Transaction> transactionlist = new ArrayList<>();
+        String sql = "select * from transactions where account_no =" + kontoNr;
+        try (Connection con = database.connect();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int transaction_id = resultSet.getInt("transaction_id");
+                int amount = resultSet.getInt("amount");
+                Timestamp date = resultSet.getTimestamp("transaction_date");
+                transactionlist.add(new Transaction(transaction_id,amount,date));
+            }
+        } catch (SQLException e) {
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+        return transactionlist;
+    }
+
     public int getAccountBalance(int kontoNr) {
         int sum =0;
         String sql = "select sum(amount) AS result from transactions where account_no = " + kontoNr;
