@@ -66,6 +66,7 @@ public class MainMenu {
                     break;
                 case 3:
                     System.out.println("du valgte 3: kontoudskrift");
+                    listBankTransactions();
                     break;
                     case 4:
                             System.out.println("Du valgte 4: overfør mellem konti");
@@ -172,6 +173,19 @@ public class MainMenu {
         // transaktioner vises for kunde 1, da der ikke er et loginsystem til forskellige kunder
         int acc_no = 1;
         List<Transaction> transactionList = new ArrayList<>();
+        transactionList = dbMapper.getTransactionForAccNo(acc_no);
+        for (Transaction transaction : transactionList) {
+            System.out.println("Printer transaktionsliste for kontonr: " + acc_no);
+            System.out.print("Transaktions ID:" + transaction.getTransactionNr()+"");
+            System.out.print(" Beløb:" + transaction.getAmount());
+            System.out.println(" Dato: " + transaction.getDate());
+
+        }
+    }
+    public void listBankTransactions()
+    {
+        int acc_no = Input.getInt("Hvilken kunde vil du se kontoudskrift for?: ");
+        List<Transaction> transactionList;
         transactionList = dbMapper.getTransactionForAccNo(acc_no);
         for (Transaction transaction : transactionList) {
             System.out.println("Printer transaktionsliste for kontonr: " + acc_no);
