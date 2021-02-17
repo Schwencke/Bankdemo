@@ -37,6 +37,7 @@ public class DbMapper {
         return customerList;
     }
 
+
     public Transaction addTransaction(Transaction transaction) {
         boolean updated = false;
         int newId = 0;
@@ -97,33 +98,28 @@ public class DbMapper {
         }
     }
 
-//    public Pizza insertPizza(Pizza pizza){
-//        boolean result = false;
-//        int newId = 0;
-//        String sql = "insert into pizza (pizza_no, name, ingredients, price) values (?,?,?,?)";
-//        try (Connection connection = database.connect()) {
-//            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS )) {
-//                ps.setInt(1, pizza.getPizzaNo());
-//                ps.setString(2, pizza.getName());
-//                ps.setString(3, pizza.getIngredients());
-//                ps.setInt(4, pizza.getPrice());
-//                int rowsAffected = ps.executeUpdate();
-//                if (rowsAffected == 1){
-//                    result = true;
-//                }
-//                ResultSet idResultset = ps.getGeneratedKeys();
-//                if (idResultset.next()){
-//                    newId = idResultset.getInt(1);
-//                    pizza.setPizzaId(newId);
-//                } else {
-//                    pizza = null;
-//                }
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//        return pizza;
-//    }
+    public void newAccount(int customerID)
+    {
+        boolean result = false;
+        String sql = "insert into accounts (balance, owner_id) values (?,?)";
+        try (Connection connection = database.connect()) {
+           try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS )) {
+            ps.setInt(1, 0);
+            ps.setInt(2, customerID);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected >= 1)
+            {
+                result = true;
+            }
+            }
+        } catch (SQLException e){
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+    }
 }
+
+
+
+
+
