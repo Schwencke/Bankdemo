@@ -71,6 +71,7 @@ public class MainMenu {
                             break;
                         case 5:
                             System.out.println("Du valgte 5: opret ny konto til kunde");
+                            createNewAcc();
                             break;
 
                 case 0:
@@ -115,17 +116,17 @@ public class MainMenu {
 
     }
 
-    private void newAcc (int customerID)
-    {
-        List<Customer> customerList = dbMapper.viewAllCustomers();
-        for (Customer customer : customerList) {
-            if (customerID == customer.getCustomer_no()){
-                dbMapper.newAccount(customer.getCustomer_no());
-                System.out.println("En konto blev oprettet");
-            }
-
-        }
-    }
+//    private void newAcc (int customerID)
+//    {
+//        List<Customer> customerList = dbMapper.viewAllCustomers();
+//        for (Customer customer : customerList) {
+//            if (customerID == customer.getCustomer_no()){
+//                dbMapper.newAccount(customer.getCustomer_no());
+//                System.out.println("En konto blev oprettet");
+//            }
+//
+//        }
+//    }
 
 // mangler vi ikke en usecase for at udskrive en liste over alle kunder?
 
@@ -153,5 +154,15 @@ public class MainMenu {
 //                System.out.println("\nDin nye saldo er: " + getBalance() + "kr.");
 
 
+    }
+
+    public void createNewAcc()
+    {
+        int kundenr = Input.getInt("Hvilke kunde skal have ny konto?: ");
+
+        if (dbMapper.newAccount(kundenr) !=0){
+            int accNo = dbMapper.newAccount(kundenr);
+            System.out.println("En ny konto til kunden med nr: "+ accNo +" blev oprettet");
+        } else System.out.println("fejlen opstod fordi funktionen retunere 0");
     }
 }

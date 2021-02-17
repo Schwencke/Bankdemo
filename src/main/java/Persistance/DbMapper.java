@@ -98,24 +98,30 @@ public class DbMapper {
         }
     }
 
-    public void newAccount(int customerID)
+    public int newAccount(int customerID)
     {
-        boolean result = false;
+
+        //boolean result = false;
         String sql = "insert into accounts (balance, owner_id) values (?,?)";
+        int newAccNo =0;
         try (Connection connection = database.connect()) {
            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS )) {
             ps.setInt(1, 0);
             ps.setInt(2, customerID);
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected >= 1)
-            {
-                result = true;
-            }
-            }
+            ps.executeUpdate();
+
+               ResultSet resultSet = ps.getGeneratedKeys();
+               if (resultSet.next()) {
+                   newAccNo = resultSet.getInt(1);
+               } else {
+                   newAccNo = 0;
+               }
+           }
         } catch (SQLException e){
             System.out.println("Fejl i connection til databasen");
             e.printStackTrace();
         }
+        return newAccNo  ;
     }
 }
 
