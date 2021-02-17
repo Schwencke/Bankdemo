@@ -6,13 +6,31 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Account {
-
+    Scanner sc = new Scanner(System.in);
+    private List<Transaction> transactions;
+    private Customer customer;
+    private int accNo;
+    private int accBalance;
     private int acc_no;
     private int balance;
 
-    public Account(int acc_no, int balance) {
-        this.acc_no = acc_no;
-        this.balance = balance;
+
+    public int getAccNo() {
+        return accNo;
+    }
+
+    public Account(int accNo, int balance) {
+        this.accNo = accNo;
+        this.accBalance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + "customer= " + customer + "\n" + "accNo= " + accNo + "\n" + "accBalance= " + accBalance;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 
     public Account() {

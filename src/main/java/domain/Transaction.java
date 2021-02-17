@@ -7,6 +7,9 @@ public class Transaction {
     private int transactionNr;
     private int account_no;
     private int amount;
+    private int accNo;
+
+    Account account;
     private Timestamp date;
 
     public Transaction(int account_no, int amount) {
@@ -41,6 +44,12 @@ public class Transaction {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+        this.accNo=account.getAccNo();
     }
 
     public int getTransactionNr() {

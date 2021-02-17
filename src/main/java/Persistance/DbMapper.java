@@ -37,11 +37,60 @@ public class DbMapper {
         return customerList;
     }
 
+    public List<Account> viewAllCustomersWithBalance()
+    {
+        List<Account> accountList = new ArrayList<>();
+        String sql = "select * from bank.accounts where balance>=0 ";
+        try (Connection con = database.connect();
+             PreparedStatement ps = con.prepareStatement(sql)){
+            ResultSet resultSet = ps.executeQuery();
+            System.out.println("\n");
+            while (resultSet.next()){
+                int accNo = resultSet.getInt("acc_no");
+                int balance = resultSet.getInt("balance");
+                accountList.add(new Account(accNo,balance));
+            }
+        } catch (SQLException e){
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+        return accountList;
+    }
+
+//    public Pizza insertPizza(Pizza pizza){
+//        boolean result = false;
+//        int newId = 0;
+//        String sql = "insert into pizza (pizza_no, name, ingredients, price) values (?,?,?,?)";
+//        try (Connection connection = database.connect()) {
+//            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS )) {
+//                ps.setInt(1, pizza.getPizzaNo());
+//                ps.setString(2, pizza.getName());
+//                ps.setString(3, pizza.getIngredients());
+//                ps.setInt(4, pizza.getPrice());
+//                int rowsAffected = ps.executeUpdate();
+//                if (rowsAffected == 1){
+//                    result = true;
+//                }
+//                ResultSet idResultset = ps.getGeneratedKeys();
+//                if (idResultset.next()){
+//                    newId = idResultset.getInt(1);
+//                    pizza.setPizzaId(newId);
+//                } else {
+//                    pizza = null;
+//                }
+//            } catch (SQLException throwables) {
+//                throwables.printStackTrace();
+//            }
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//        return pizza;
+//    }
 
     public Transaction addTransaction(Transaction transaction) {
         boolean updated = false;
         int newId = 0;
-        String sql = "insert into transactions (account_no, amount, transaction_date) values(?,?,NOW())";
+        String sql = "insert into transactions (account_no, amount) values(?,?)";
         try (Connection connection = database.connect()) {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setInt(1, transaction.getAccount_no());
@@ -60,7 +109,6 @@ public class DbMapper {
                     transaction = null;
                 }
             }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -96,7 +144,6 @@ public class DbMapper {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 sum = resultSet.getInt(1);
-                System.out.println(sum);
             }
         } catch (SQLException e) {
             System.out.println("Fejl i connection til databasen");
@@ -118,10 +165,7 @@ public class DbMapper {
         }
     }
 
-    public int newAccount(int customerID)
-    {
-
-        //boolean result = false;
+    public int newAccount(int customerID) {
         String sql = "insert into accounts (balance, owner_id) values (?,?)";
         int newAccNo =0;
         try (Connection connection = database.connect()) {
@@ -141,7 +185,7 @@ public class DbMapper {
             System.out.println("Fejl i connection til databasen");
             e.printStackTrace();
         }
-        return newAccNo  ;
+        return newAccNo;
     }
 }
 
