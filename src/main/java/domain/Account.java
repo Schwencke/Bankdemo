@@ -31,13 +31,8 @@ public class Account {
 
     public Customer getCustomer() {
         return customer;
-
-    public Account(int acc_no, int balance) {
-        this.acc_no = acc_no;
-        this.balance = balance;
-
     }
-
+    
     public Account() {
     }
 

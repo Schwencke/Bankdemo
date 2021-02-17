@@ -86,7 +86,7 @@ public class DbMapper {
 //        }
 //        return pizza;
 //    }
-    
+
     public Transaction addTransaction(Transaction transaction) {
         boolean updated = false;
         int newId = 0;

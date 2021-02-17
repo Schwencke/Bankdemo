@@ -72,7 +72,7 @@ public class MainMenu {
                     int hæv = Input.getInt("");
                     System.out.println("Hvor meget vil du hæve? ");
                     int hævBeløb=Input.getInt("");
-                    account.withDrawAmount(hævBeløb);
+
                     System.out.println("Vælg kunde som du vil indsætte til: " + dbMapper.viewAllCustomers());
                     int indsæt = Input.getInt("");
 

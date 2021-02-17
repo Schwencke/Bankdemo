@@ -7,7 +7,6 @@ public class Transaction {
     private int transactionNr;
     private int account_no;
     private int amount;
-    private Date date;
     private int accNo;
 
     Account account;
