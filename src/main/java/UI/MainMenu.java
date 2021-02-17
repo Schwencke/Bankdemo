@@ -113,8 +113,6 @@ public class MainMenu {
                             System.out.println("Din indtastning svarede ikke til en valgmulighed");
                             break;
                     }
-
-
             }
         }
     }
@@ -127,7 +125,6 @@ public class MainMenu {
         System.out.println("3: kontoudskrift");
         System.out.println("4: overfør penge mellem konti");
         System.out.println("0: afslut");
-
     }
 
     private void showMainMenuBank() {
@@ -139,7 +136,6 @@ public class MainMenu {
         System.out.println("4: overfør penge mellem konti");
         System.out.println("5: opret ny konto til kunde");
         System.out.println("0: afslut");
-
     }
 
 //    private void newAcc (int customerID)
@@ -212,7 +208,6 @@ public class MainMenu {
             System.out.print("Transaktions ID:" + transaction.getTransactionNr() + "");
             System.out.print(" Beløb :" + transaction.getAmount());
             System.out.println(" Dato : " + transaction.getDate());
-
         }
     }
 
@@ -225,7 +220,6 @@ public class MainMenu {
             System.out.print("Transaktions ID:" + transaction.getTransactionNr() + "");
             System.out.print(" Beløb:" + transaction.getAmount());
             System.out.println(" Dato: " + transaction.getDate());
-
         }
     }
 
@@ -266,5 +260,4 @@ public class MainMenu {
             }
         }
     }
-
 }

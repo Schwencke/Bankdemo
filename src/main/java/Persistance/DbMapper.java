@@ -37,6 +37,8 @@ public class DbMapper {
         return customerList;
     }
 
+
+
     public List<Account> viewAllCustomersWithBalance()
     {
         List<Account> accountList = new ArrayList<>();
