@@ -204,14 +204,14 @@ public class MainMenu {
 
     public void listCustomerTransactions() {
         // transaktioner vises for kunde 1, da der ikke er et loginsystem til forskellige kunder
-        int acc_no = 1;
+        int acc_no = Input.getInt("Hvilket konto nummer?");
         List<Transaction> transactionList = new ArrayList<>();
         transactionList = dbMapper.getTransactionForAccNo(acc_no);
+        System.out.println("Printer transaktionsliste for kontonr: " + acc_no);
         for (Transaction transaction : transactionList) {
-            System.out.println("Printer transaktionsliste for kontonr: " + acc_no);
             System.out.print("Transaktions ID:" + transaction.getTransactionNr() + "");
-            System.out.print(" Beløb:" + transaction.getAmount());
-            System.out.println(" Dato: " + transaction.getDate());
+            System.out.print(" Beløb :" + transaction.getAmount());
+            System.out.println(" Dato : " + transaction.getDate());
 
         }
     }
