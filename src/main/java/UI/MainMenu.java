@@ -153,6 +153,7 @@ public class MainMenu {
         System.out.println("6: opret ny kunde");
         System.out.println("7: slet kunde fra kartotek");
         System.out.println("8: vis oversigt over alle kunder");
+
         System.out.println("0: afslut");
     }
 
