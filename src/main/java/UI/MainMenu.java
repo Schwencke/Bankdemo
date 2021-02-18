@@ -32,13 +32,15 @@ public class MainMenu {
                     switch (valg) {
                         case 1:
                             System.out.println("du valgte 1: indsæt penge");
-                            int kontoNr = Input.getInt("indtast kontonummer: ");
-                            int amount = Input.getInt("hvor meget ønsker du at indsætte: ");
-                            depositAmount(kontoNr, amount);
+                            int indsæt_kontoNr = Input.getInt("indtast kontonummer: ");
+                            int indsæt_amount = Input.getInt("hvor meget ønsker du at indsætte: ");
+                            depositAmount(indsæt_kontoNr, indsæt_amount);
                             break;
                         case 2:
                             System.out.println("du valgte 2: hæv penge");
-                            withdrawAmount();
+                            int hæv_kontoNr = Input.getInt("indtast kontonummer: ");
+                            int hæv_amount = Input.getInt("hvor meget ønsker du at hæve?: ");
+                            withdrawAmount(hæv_kontoNr, hæv_amount);
                             break;
                         case 3:
                             System.out.println("du valgte 3: vis kontoudskrift");
@@ -176,14 +178,12 @@ public class MainMenu {
                 System.out.println("Saldo: " + dbMapper.getAccountBalance(kontoNr) + " kr.");
     }
 
-    public void withdrawAmount() {
-        int kontoNr = Input.getInt("indtast kontonummer: ");
-        int amount = Input.getInt("hvor meget ønsker du at hæve: ");
+    public void withdrawAmount(int kontoNr, int amount) {
         int printamount = amount;
         amount = -amount;
         if (amount >= 0) {
             System.out.println("for at hæve penge, skal der indtastes et heltal. ");
-            withdrawAmount();
+            return;
         } else {
             if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
                 dbMapper.updateAccountBalance(kontoNr);

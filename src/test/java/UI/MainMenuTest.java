@@ -29,6 +29,7 @@ class MainMenuTest {
         dbMapper.addCustomer(testCustomer);
         kontoNrTest = dbMapper.newAccount(testCustomer.getCustomer_no());
         testAccount = new Account(kontoNrTest);
+        mainMenu.depositAmount(kontoNrTest, 100);
 
     }
 
@@ -41,15 +42,16 @@ class MainMenuTest {
 
     @Test
     void depositAmount() {
-        mainMenu.depositAmount(kontoNrTest, 100);
-        int balance = dbMapper.getAccountBalance(kontoNrTest);
-        assertEquals(100, balance);
+        assertEquals(100, dbMapper.getAccountBalance(kontoNrTest));
 
 
     }
 
     @Test
     void withdrawAmount() {
+        mainMenu.withdrawAmount(kontoNrTest, 100);
+        assertEquals(0, dbMapper.getAccountBalance(kontoNrTest));
+
     }
 
     @Test
