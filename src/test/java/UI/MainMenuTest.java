@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainMenuTest {
     final String USER = "bankuser";
     final String PASSWORD = "Bank123";
-    final String URL = "jdbc:mysql://localhost:3306/bank?serverTimezone=CET&useSSL=false";
+    final String URL = "jdbc:mysql://localhost:3306/bank_test?serverTimezone=CET&useSSL=false";
 
     Database database = new Database(USER, PASSWORD, URL);
     DbMapper dbMapper = new DbMapper(database);
