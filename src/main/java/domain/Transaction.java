@@ -1,15 +1,11 @@
 package domain;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Transaction {
     private int transactionNr;
     private int account_no;
     private int amount;
-    private int accNo;
-
-    Account account;
     private Timestamp date;
 
     public Transaction(int account_no, int amount) {
@@ -36,20 +32,6 @@ public class Transaction {
 
     public void setTransactionNr(int transactionNr) {
         this.transactionNr = transactionNr;
-    }
-
-    public void setAccount_no(int account_no) {
-        this.account_no = account_no;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-
-    public void setDate(Timestamp date) {
-        this.date = date;
-        this.accNo=account.getAccNo();
     }
 
     public int getTransactionNr() {

@@ -2,11 +2,9 @@ package UI;
 
 import Persistance.Database;
 import Persistance.DbMapper;
-import domain.Account;
 import domain.Customer;
 import domain.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenu {
@@ -85,18 +83,6 @@ public class MainMenu {
                             int acc_no = Input.getInt("Hvilken kunde vil du se kontoudskrift for?: ");
                             listBankTransactions(acc_no);
                             break;
-
-
-//                                    System.out.println("du valgte 3: overfør penge mellem konti");
-//                                    System.out.println("Vælg kunde som du vil hæve fra: " + dbMapper.viewAllCustomersWithBalance().toString());
-//                                    int hæv = Input.getInt("");
-//                                    System.out.println("Hvor meget vil du hæve? ");
-//                                    int hævBeløb = Input.getInt("");
-//                                    System.out.println("Vælg kunde som du vil indsætte til: " + dbMapper.viewAllCustomers());
-//                                    int indsæt = Input.getInt("");
-//                                    System.out.println("du valgte 3: kontoudskrift");
-//                                    break;
-
                         case 4:
                             System.out.println("Du valgte 4: overfør mellem konti");
                             int kontoNr = Input.getInt("indtast kontonummer du vil hæve fra: ");
@@ -153,7 +139,6 @@ public class MainMenu {
         }
     }
 
-
     private void showMainMenuKunde() {
         System.out.println("Hovedmenu:");
         System.out.println("Du har følgende valgmligheder:");
@@ -179,17 +164,6 @@ public class MainMenu {
 
         System.out.println("0: afslut");
     }
-
-//    private void newAcc (int customerID)
-//    {
-//        List<Customer> customerList = dbMapper.viewAllCustomers();
-//        for (Customer customer : customerList) {
-//            if (customerID == customer.getCustomer_no()){
-//                dbMapper.newAccount(customer.getCustomer_no());
-//                System.out.println("En konto blev oprettet");
-//            }
-////        }
-//    }
 
     public void viewAllCustomers() {
         List<Customer> customerList = dbMapper.viewAllCustomers();

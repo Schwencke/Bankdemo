@@ -1,10 +1,5 @@
 import Persistance.Database;
-import Persistance.DbMapper;
 import UI.MainMenu;
-import domain.Account;
-import domain.Customer;
-
-import java.util.List;
 
 public class Main {
 
@@ -13,10 +8,7 @@ public class Main {
         final String PASSWORD = "Bank123";
         final String URL = "jdbc:mysql://localhost:3306/bank?serverTimezone=CET&useSSL=false";
         Database database = new Database(USER, PASSWORD, URL);
-
         MainMenu mainMenu = new MainMenu(database);
         mainMenu.mainMenuLoop();
-
-
     }
 }
