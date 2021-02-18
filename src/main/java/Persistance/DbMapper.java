@@ -23,7 +23,6 @@ public class DbMapper {
         try (Connection con = database.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet resultSet = ps.executeQuery();
-            System.out.println("\n");
             while (resultSet.next()) {
                 int customer_no = resultSet.getInt("customer_no");
                 String first_name = resultSet.getString("first_name");
@@ -37,20 +36,20 @@ public class DbMapper {
         return customerList;
     }
 
-    public List<Account> viewAllCustomersWithBalance()
-    {
+
+    public List<Account> viewAllCustomersWithBalance() {
         List<Account> accountList = new ArrayList<>();
         String sql = "select * from bank.accounts where balance>=0 ";
         try (Connection con = database.connect();
-             PreparedStatement ps = con.prepareStatement(sql)){
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet resultSet = ps.executeQuery();
             System.out.println("\n");
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int accNo = resultSet.getInt("acc_no");
                 int balance = resultSet.getInt("balance");
-                accountList.add(new Account(accNo,balance));
+                accountList.add(new Account(accNo, balance));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Fejl i connection til databasen");
             e.printStackTrace();
         }
@@ -100,7 +99,6 @@ public class DbMapper {
                 if (rowsAffected == 1) {
                     updated = true;
                 }
-
                 ResultSet resultSet = ps.getGeneratedKeys();
                 if (resultSet.next()) {
                     newId = resultSet.getInt(1);
@@ -113,11 +111,9 @@ public class DbMapper {
             throwables.printStackTrace();
         }
         return transaction;
-
     }
 
-    public List<Transaction> getTransactionForAccNo (int kontoNr)
-    {
+    public List<Transaction> getTransactionForAccNo(int kontoNr) {
         List<Transaction> transactionlist = new ArrayList<>();
         String sql = "select * from transactions where account_no =" + kontoNr;
         try (Connection con = database.connect();
@@ -127,7 +123,7 @@ public class DbMapper {
                 int transaction_id = resultSet.getInt("transaction_id");
                 int amount = resultSet.getInt("amount");
                 Timestamp date = resultSet.getTimestamp("transaction_date");
-                transactionlist.add(new Transaction(transaction_id,amount,date));
+                transactionlist.add(new Transaction(transaction_id, amount, date));
             }
         } catch (SQLException e) {
             System.out.println("Fejl i connection til databasen");
@@ -137,7 +133,7 @@ public class DbMapper {
     }
 
     public int getAccountBalance(int kontoNr) {
-        int sum =0;
+        int sum = 0;
         String sql = "select sum(amount) AS result from transactions where account_no = " + kontoNr;
         try (Connection con = database.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -153,13 +149,13 @@ public class DbMapper {
     }
 
     public void updateAccountBalance(int kontoNr) {
-        String sql = "update bank.accounts set balance =? where acc_no =?";
+        String sql = "update accounts set balance =? where acc_no =?";
         try (Connection con = database.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1,getAccountBalance(kontoNr));
-            ps.setInt(2,kontoNr);
+            ps.setInt(1, getAccountBalance(kontoNr));
+            ps.setInt(2, kontoNr);
             ps.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Fejl i connection til databasen");
             e.printStackTrace();
         }
@@ -167,25 +163,82 @@ public class DbMapper {
 
     public int newAccount(int customerID) {
         String sql = "insert into accounts (balance, owner_id) values (?,?)";
-        int newAccNo =0;
+        int newAccNo = 0;
         try (Connection connection = database.connect()) {
-           try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS )) {
-            ps.setInt(1, 0);
-            ps.setInt(2, customerID);
-            ps.executeUpdate();
-
-               ResultSet resultSet = ps.getGeneratedKeys();
-               if (resultSet.next()) {
-                   newAccNo = resultSet.getInt(1);
-               } else {
-                   newAccNo = 0;
-               }
-           }
-        } catch (SQLException e){
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setInt(1, 0);
+                ps.setInt(2, customerID);
+                ps.executeUpdate();
+                ResultSet resultSet = ps.getGeneratedKeys();
+                if (resultSet.next()) {
+                    newAccNo = resultSet.getInt(1);
+                } else {
+                    newAccNo = 0;
+                }
+            }
+        } catch (SQLException e) {
             System.out.println("Fejl i connection til databasen");
             e.printStackTrace();
         }
         return newAccNo;
+    }
+
+    public Customer addCustomer(Customer customer) {
+        boolean updated = false;
+        int newId = 0;
+        String sql = "insert into customers (first_name, last_name) values(?,?)";
+        try (Connection connection = database.connect()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setString(1, customer.getFirst_name());
+                ps.setString(2, customer.getLast_name());
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected == 1) {
+                    updated = true;
+                }
+                ResultSet resultSet = ps.getGeneratedKeys();
+                if (resultSet.next()) {
+                    newId = resultSet.getInt(1);
+                    customer.setCustomer_no(newId);
+                } else {
+                    customer = null;
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return customer;
+   }
+    public void deleteAccount(int a_no) {
+        boolean result = false;
+        String sql = "delete from accounts where acc_no = ?";
+        try (Connection connection = database.connect()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, a_no);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+    }
+
+    public boolean deleteCustomer(int c_no) {
+        boolean result = false;
+        String sql = "delete from customers where customer_no = ?";
+        try (Connection connection = database.connect()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, c_no);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+        return result;
     }
 }
 
