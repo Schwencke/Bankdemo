@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `bank` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `bank`;
 -- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: bank
+-- Host: localhost    Database: bank
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -25,11 +23,12 @@ DROP TABLE IF EXISTS `accounts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `accounts` (
-  `acc_no` int NOT NULL,
+  `acc_no` int NOT NULL AUTO_INCREMENT,
+  `owner_id` int NOT NULL,
   `balance` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`acc_no`),
   UNIQUE KEY `acc_no_UNIQUE` (`acc_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +37,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+INSERT INTO `accounts` VALUES (1,1,400),(2,1,100),(3,1,0),(4,1,0),(5,1,0),(6,1,0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -49,12 +49,12 @@ DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
-  `customer_no` int NOT NULL,
+  `customer_no` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
   PRIMARY KEY (`customer_no`),
   UNIQUE KEY `customer_no_UNIQUE` (`customer_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Thomas','Overgaard');
+INSERT INTO `customers` VALUES (114,'Søren','Sko'),(115,'Vilads','FraValby');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,9 +80,8 @@ CREATE TABLE `transactions` (
   `account_no` int NOT NULL,
   `transaction_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`transaction_ID`),
-  UNIQUE KEY `transaction_ID_UNIQUE` (`transaction_ID`),
-  UNIQUE KEY `account_no_UNIQUE` (`account_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `transaction_ID_UNIQUE` (`transaction_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,6 +90,7 @@ CREATE TABLE `transactions` (
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
+INSERT INTO `transactions` VALUES (30,100,1,'2021-02-18 00:23:50'),(31,100,1,'2021-02-18 00:26:52'),(32,100,1,'2021-02-18 00:32:56'),(33,100,1,'2021-02-18 00:33:47'),(34,100,1,'2021-02-18 00:43:49'),(35,100,24,'2021-02-18 00:51:15'),(36,100,29,'2021-02-18 00:54:26'),(37,100,32,'2021-02-18 00:58:59'),(38,100,39,'2021-02-18 00:59:20'),(39,100,46,'2021-02-18 00:59:48'),(40,100,53,'2021-02-18 01:00:53'),(41,100,60,'2021-02-18 01:04:52'),(42,100,67,'2021-02-18 01:05:30'),(43,100,74,'2021-02-18 01:05:40'),(44,-100,1,'2021-02-18 10:12:01'),(45,100,2,'2021-02-18 10:12:02');
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -103,4 +103,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-15 21:04:42
+-- Dump completed on 2021-02-18 13:03:20
