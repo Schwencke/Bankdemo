@@ -30,44 +30,46 @@ class MainMenuTest {
     void setUp() {
         testCustomer = new Customer("test", "testefternavn");
         dbMapper.addCustomer(testCustomer);
-        dbMapper.newAccount(testCustomer.getCustomer_no());
+        int testAccountNr = dbMapper.newAccount(testCustomer.getCustomer_no());
+        testAccount = new Account(testAccountNr);
+
 
     }
 
     @AfterEach
     void tearDown() {
-        dbMapper.deleteTESTAccounts();
-        dbMapper.deleteTESTCustomers();
+//        dbMapper.deleteTESTAccounts();
+//        dbMapper.deleteTESTCustomers();
 
     }
 
     @Test
     void depositAmount() {
-        mainMenu.depositAmount(testCustomer.getCustomer_no(), 100);
-        assertEquals(100, dbMapper.getAccountBalance(testCustomer.getCustomer_no()));
+        mainMenu.depositAmount(testAccount.getAccNo(), 100);
+        assertEquals(100, dbMapper.getAccountBalance(testAccount.getAccNo()));
 
 
     }
 
     @Test
     void withdrawAmount() {
-        mainMenu.depositAmount(testCustomer.getCustomer_no(), 100);
-        mainMenu.withdrawAmount(testCustomer.getCustomer_no(), 100);
+        mainMenu.depositAmount(testAccount.getAccNo(), 100);
+        mainMenu.withdrawAmount(testAccount.getAccNo(), 100);
         assertEquals(0, dbMapper.getAccountBalance(testCustomer.getCustomer_no()));
 
     }
 
     @Test
     void createNewAcc() {
-       int coNo = 2;
-       mainMenu.createNewAcc(coNo);
-       assertNotNull(dbMapper.getAccountBalance(coNo));
+        int coNo = 2;
+        mainMenu.createNewAcc(coNo);
+        assertNotNull(dbMapper.getAccountBalance(coNo));
     }
 
     @Test
     void listCustomerTransactions() {
         mainMenu.depositAmount(testCustomer.getCustomer_no(), 100);
-       assertFalse(mainMenu.listCustomerTransactions(testCustomer.getCustomer_no()).isEmpty());
+        assertFalse(mainMenu.listCustomerTransactions(testCustomer.getCustomer_no()).isEmpty());
 
 
     }
@@ -80,9 +82,34 @@ class MainMenuTest {
 
     @Test
     void changeAccount() {
+//        tilføjer en modtager-bruger med konto lokalt til denne test
+        Customer recieverCustomer = new Customer("reciever", "recieverSurname");
+        dbMapper.addCustomer(recieverCustomer);
+        int recieverAccountNr = dbMapper.newAccount(recieverCustomer.getCustomer_no());
+        Account recieverAccount = new Account(recieverAccountNr);
+
+//                sætter penge ind på afsenders konto
+        mainMenu.depositAmount(testAccount.getAccNo(), 100);
+
+        mainMenu.changeAccount(testAccount.getAccNo(), 50, recieverAccount.getAccNo());
+
+        assertEquals(50, dbMapper.getAccountBalance(recieverAccount.getAccNo()));
+
+
     }
 
     @Test
     void changeAccountBank() {
+        //        kopi af changeAccount
+        Customer recieverCustomer = new Customer("reciever", "recieverSurname");
+        dbMapper.addCustomer(recieverCustomer);
+        int recieverAccountNr = dbMapper.newAccount(recieverCustomer.getCustomer_no());
+        Account recieverAccount = new Account(recieverAccountNr);
+
+
+        mainMenu.depositAmount(testAccount.getAccNo(), 100);
+
+        mainMenu.changeAccount(testAccount.getAccNo(), 50, recieverAccount.getAccNo());
+        assertEquals(50, dbMapper.getAccountBalance(recieverAccount.getAccNo()));
     }
 }

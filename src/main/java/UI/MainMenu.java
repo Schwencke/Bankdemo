@@ -49,7 +49,17 @@ public class MainMenu {
                             break;
                         case 4:
                             System.out.println("du valgte 4: overfør penge mellem konti");
-                            changeAccount();
+                            int kontoNr = Input.getInt("indtast kontonummer du vil hæve fra: ");
+                            int amount = Input.getInt("hvor meget ønsker du at hæve: ");
+                            int printamount = amount;
+                            amount = -amount;
+                            int newAccount = Input.getInt("Hvilken konto vil du indsætte til? ");
+                            if (amount >= 0) {
+                                System.out.println("for at hæve penge, skal der indtastes et heltal. ");
+                                return;
+                            } else {
+                                changeAccount(kontoNr, amount, newAccount);
+                            }
                             break;
                         case 0:
                             System.out.println("du valgte 0: afslut");
@@ -89,7 +99,17 @@ public class MainMenu {
 
                         case 4:
                             System.out.println("Du valgte 4: overfør mellem konti");
-                            changeAccountBank();
+                            int kontoNr = Input.getInt("indtast kontonummer du vil hæve fra: ");
+                            int amount = Input.getInt("hvor meget ønsker du at hæve: ");
+                            int printamount = amount;
+                            amount = -amount;
+                            int newAccount = Input.getInt("Hvilken konto vil du indsætte til? ");
+                            if (amount >= 0) {
+                                System.out.println("for at hæve penge, skal der indtastes et heltal. ");
+                                return;
+                            } else {
+                                changeAccountBank(kontoNr, amount, newAccount);
+                            }
                             break;
                         case 5:
                             System.out.println("Du valgte 5: opret ny konto til kunde");
@@ -248,41 +268,24 @@ public class MainMenu {
         return transactionList;
     }
 
-    public void changeAccount() {
-        int kontoNr = Input.getInt("indtast kontonummer du vil hæve fra: ");
-        int amount = Input.getInt("hvor meget ønsker du at hæve: ");
-        int printamount = amount;
-        amount = -amount;
-        int newAccount = Input.getInt("Hvilken konto vil du indsætte til? ");
-        if (amount >= 0) {
-            System.out.println("for at hæve penge, skal der indtastes et heltal. ");
-            changeAccount();
-        } else {
-            if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
-                dbMapper.updateAccountBalance(kontoNr);
-                dbMapper.addTransaction(new Transaction(newAccount, printamount));
-                dbMapper.updateAccountBalance(newAccount);
-                System.out.println("du har hævet " + printamount + " kr. på konto " + kontoNr + " og indsat " + printamount + " på konti " + newAccount);
-            }
+    public void changeAccount(int kontoNr, int amountSend, int newAccount) {
+        int amountWithdrawn = -amountSend;
+        if (dbMapper.addTransaction(new Transaction(kontoNr, amountWithdrawn)) != null) {
+            dbMapper.updateAccountBalance(kontoNr);
+            dbMapper.addTransaction(new Transaction(newAccount, amountSend));
+            dbMapper.updateAccountBalance(newAccount);
+            System.out.println("du har hævet " + amountSend + " kr. på konto " + kontoNr + " og indsat " + amountSend + " på konti " + newAccount);
         }
     }
 
-    public void changeAccountBank() {
-        int kontoNr = Input.getInt("indtast kontonummer du vil hæve fra: ");
-        int amount = Input.getInt("hvor meget ønsker du at hæve: ");
-        int printamount = amount;
-        amount = -amount;
-        if (amount >= 0) {
-            System.out.println("for at hæve penge, skal der indtastes et heltal. ");
-            changeAccount();
-        } else {
-            int newAccount = Input.getInt("Hvilken konto vil du indsætte til? ");
-            if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
-                dbMapper.updateAccountBalance(kontoNr);
-                dbMapper.addTransaction(new Transaction(newAccount, printamount));
-                dbMapper.updateAccountBalance(newAccount);
-                System.out.println("du har hævet " + printamount + " kr. på konto " + kontoNr + " og indsat " + printamount + " på konti " + newAccount);
-            }
+
+    public void changeAccountBank(int kontoNr, int amountSend, int newAccount) {
+        int amountWithdrawn = -amountSend;
+        if (dbMapper.addTransaction(new Transaction(kontoNr, amountWithdrawn)) != null) {
+            dbMapper.updateAccountBalance(kontoNr);
+            dbMapper.addTransaction(new Transaction(newAccount, amountSend));
+            dbMapper.updateAccountBalance(newAccount);
+            System.out.println("du har hævet " + amountSend + " kr. på konto " + kontoNr + " og indsat " + amountSend + " på konti " + newAccount);
         }
     }
 }
