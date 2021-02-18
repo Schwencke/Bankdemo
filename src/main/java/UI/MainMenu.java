@@ -44,7 +44,8 @@ public class MainMenu {
                             break;
                         case 3:
                             System.out.println("du valgte 3: vis kontoudskrift");
-                            listCustomerTransactions();
+                            int acc_no = Input.getInt("Hvilket konto nummer?");
+                            listCustomerTransactions(acc_no);
                             break;
                         case 4:
                             System.out.println("du valgte 4: overfør penge mellem konti");
@@ -71,7 +72,8 @@ public class MainMenu {
                             break;
                         case 3:
                             System.out.println("du valgte 3: kontoudskrift");
-                            listBankTransactions();
+                            int acc_no = Input.getInt("Hvilken kunde vil du se kontoudskrift for?: ");
+                            listBankTransactions(acc_no);
                             break;
 
 
@@ -222,10 +224,8 @@ public class MainMenu {
         } else System.out.println("fejlen opstod fordi funktionen retunere 0");
     }
 
-    public void listCustomerTransactions() {
-        // transaktioner vises for kunde 1, da der ikke er et loginsystem til forskellige kunder
-        int acc_no = Input.getInt("Hvilket konto nummer?");
-        List<Transaction> transactionList = new ArrayList<>();
+    public List<Transaction> listCustomerTransactions(int acc_no) {
+        List<Transaction> transactionList;
         transactionList = dbMapper.getTransactionForAccNo(acc_no);
         System.out.println("Printer transaktionsliste for kontonr: " + acc_no);
         for (Transaction transaction : transactionList) {
@@ -233,10 +233,10 @@ public class MainMenu {
             System.out.print(" Beløb :" + transaction.getAmount());
             System.out.println(" Dato : " + transaction.getDate());
         }
+        return transactionList;
     }
 
-    public void listBankTransactions() {
-        int acc_no = Input.getInt("Hvilken kunde vil du se kontoudskrift for?: ");
+    public List<Transaction> listBankTransactions(int acc_no) {
         List<Transaction> transactionList;
         transactionList = dbMapper.getTransactionForAccNo(acc_no);
         for (Transaction transaction : transactionList) {
@@ -245,6 +245,7 @@ public class MainMenu {
             System.out.print(" Beløb:" + transaction.getAmount());
             System.out.println(" Dato: " + transaction.getDate());
         }
+        return transactionList;
     }
 
     public void changeAccount() {
