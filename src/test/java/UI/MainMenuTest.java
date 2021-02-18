@@ -17,7 +17,7 @@ class MainMenuTest {
 
     Database database = new Database(USER, PASSWORD, URL);
     DbMapper dbMapper = new DbMapper(database);
-    MainMenu mainMenu = new MainMenu();
+    MainMenu mainMenu = new MainMenu(database);
 
     Customer testCustomer;
     int kontoNrTest;
@@ -36,6 +36,7 @@ class MainMenuTest {
     void tearDown() {
         dbMapper.deleteCustomer(testCustomer.getCustomer_no());
         dbMapper.deleteAccount(testAccount.getAccNo());
+
     }
 
     @Test

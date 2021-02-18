@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenu {
-    final String USER = "bankuser";
-    final String PASSWORD = "Bank123";
-    final String URL = "jdbc:mysql://localhost:3306/bank?serverTimezone=CET&useSSL=false";
+    Database database;
+    DbMapper dbMapper;
 
-    Database database = new Database(USER, PASSWORD, URL);
-    DbMapper dbMapper = new DbMapper(database);
-    Account account;
+    public MainMenu(Database database) {
+        this.database = database;
+        this.dbMapper = new DbMapper(database);
+    }
 
     public void mainMenuLoop() {
         System.out.println("Velkommen til Ebberød Banks IT-System ");
