@@ -38,8 +38,8 @@ class MainMenuTest {
 
     @AfterEach
     void tearDown() {
-//        dbMapper.deleteTESTAccounts();
-//        dbMapper.deleteTESTCustomers();
+        dbMapper.deleteTESTAccounts();
+        dbMapper.deleteTESTCustomers();
 
     }
 
@@ -55,7 +55,7 @@ class MainMenuTest {
     void withdrawAmount() {
         mainMenu.depositAmount(testAccount.getAccNo(), 100);
         mainMenu.withdrawAmount(testAccount.getAccNo(), 100);
-        assertEquals(0, dbMapper.getAccountBalance(testCustomer.getCustomer_no()));
+        assertEquals(0, dbMapper.getAccountBalance(testAccount.getAccNo()));
 
     }
 
@@ -105,10 +105,7 @@ class MainMenuTest {
         dbMapper.addCustomer(recieverCustomer);
         int recieverAccountNr = dbMapper.newAccount(recieverCustomer.getCustomer_no());
         Account recieverAccount = new Account(recieverAccountNr);
-
-
         mainMenu.depositAmount(testAccount.getAccNo(), 100);
-
         mainMenu.changeAccount(testAccount.getAccNo(), 50, recieverAccount.getAccNo());
         assertEquals(50, dbMapper.getAccountBalance(recieverAccount.getAccNo()));
     }
