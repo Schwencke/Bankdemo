@@ -23,7 +23,6 @@ public class DbMapper {
         try (Connection con = database.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet resultSet = ps.executeQuery();
-            System.out.println("\n");
             while (resultSet.next()) {
                 int customer_no = resultSet.getInt("customer_no");
                 String first_name = resultSet.getString("first_name");
@@ -100,7 +99,6 @@ public class DbMapper {
                 if (rowsAffected == 1) {
                     updated = true;
                 }
-
                 ResultSet resultSet = ps.getGeneratedKeys();
                 if (resultSet.next()) {
                     newId = resultSet.getInt(1);
@@ -226,7 +224,7 @@ public class DbMapper {
         }
     }
 
-    public void deleteCustomer(int c_no) {
+    public boolean deleteCustomer(int c_no) {
         boolean result = false;
         String sql = "delete from customers where customer_no = ?";
         try (Connection connection = database.connect()) {
@@ -240,6 +238,7 @@ public class DbMapper {
             System.out.println("Fejl i connection til databasen");
             e.printStackTrace();
         }
+        return result;
     }
     public void deleteTESTCustomers() {
         boolean result = false;
