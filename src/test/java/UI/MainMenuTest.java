@@ -2,10 +2,13 @@ package UI;
 
 import Persistance.Database;
 import Persistance.DbMapper;
+import domain.Account;
+import domain.Customer;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class MainMenuTest {
     final String USER = "bankuser";
@@ -14,15 +17,33 @@ class MainMenuTest {
 
     Database database = new Database(USER, PASSWORD, URL);
     DbMapper dbMapper = new DbMapper(database);
+    MainMenu mainMenu = new MainMenu();
+
+    Customer testCustomer;
+    int kontoNrTest;
+    Account testAccount;
 
     @BeforeEach
     void setUp() {
-        int kontoNr = 1; //det er lidt uheldigt at lade testen afhænge af databasen..
+        testCustomer = new Customer("test", "testefternavn");
+        dbMapper.addCustomer(testCustomer);
+        kontoNrTest = dbMapper.newAccount(testCustomer.getCustomer_no());
+        testAccount = new Account(kontoNrTest);
 
+    }
+
+    @AfterEach
+    void tearDown() {
+        dbMapper.deleteCustomer(testCustomer.getCustomer_no());
+        dbMapper.deleteAccount(testAccount.getAccNo());
     }
 
     @Test
     void depositAmount() {
+        mainMenu.depositAmount(kontoNrTest, 100);
+        int balance = dbMapper.getAccountBalance(kontoNrTest);
+        assertEquals(100, balance);
+
 
     }
 

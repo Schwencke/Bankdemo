@@ -151,7 +151,7 @@ public class DbMapper {
     }
 
     public void updateAccountBalance(int kontoNr) {
-        String sql = "update bank.accounts set balance =? where acc_no =?";
+        String sql = "update accounts set balance =? where acc_no =?";
         try (Connection con = database.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, getAccountBalance(kontoNr));
@@ -171,7 +171,6 @@ public class DbMapper {
                 ps.setInt(1, 0);
                 ps.setInt(2, customerID);
                 ps.executeUpdate();
-
                 ResultSet resultSet = ps.getGeneratedKeys();
                 if (resultSet.next()) {
                     newAccNo = resultSet.getInt(1);
@@ -189,7 +188,7 @@ public class DbMapper {
     public Customer addCustomer(Customer customer) {
         boolean updated = false;
         int newId = 0;
-        String sql = "insert into bank.customers (first_name, last_name) values(?,?)";
+        String sql = "insert into customers (first_name, last_name) values(?,?)";
         try (Connection connection = database.connect()) {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, customer.getFirst_name());
@@ -211,10 +210,25 @@ public class DbMapper {
         }
         return customer;
    }
+    public void deleteAccount(int a_no) {
+        boolean result = false;
+        String sql = "delete from accounts where acc_no = ?";
+        try (Connection connection = database.connect()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, a_no);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+    }
 
     public void deleteCustomer(int c_no) {
         boolean result = false;
-        String sql = "delete from bank.customers where customer_no = ?";
+        String sql = "delete from customers where customer_no = ?";
         try (Connection connection = database.connect()) {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, c_no);

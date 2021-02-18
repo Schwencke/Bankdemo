@@ -32,7 +32,9 @@ public class MainMenu {
                     switch (valg) {
                         case 1:
                             System.out.println("du valgte 1: indsæt penge");
-                            depositAmount();
+                            int kontoNr = Input.getInt("indtast kontonummer: ");
+                            int amount = Input.getInt("hvor meget ønsker du at indsætte: ");
+                            depositAmount(kontoNr, amount);
                             break;
                         case 2:
                             System.out.println("du valgte 2: hæv penge");
@@ -161,20 +163,17 @@ public class MainMenu {
 //        System.out.println(customer.getLast_name());
 //        }
 
-    public void depositAmount() {
-//        dbMapper.addTransaction(new Transaction(300, 1));
-        int kontoNr = Input.getInt("indtast kontonummer: ");
-        int amount = Input.getInt("hvor meget ønsker du at indsætte: ");
+    public void depositAmount(int kontoNr, int amount) {
         if (amount <= 0) {
             System.out.println("for at indsætte penge, skal der indtastes et positivt heltal. ");
-            depositAmount();
+            return;
         } else {
             if (dbMapper.addTransaction(new Transaction(kontoNr, amount)) != null) {
                 dbMapper.updateAccountBalance(kontoNr);
-                System.out.println("du har indsat " + amount + " kr. på din konto");
+                System.out.print("du har indsat " + amount + " kr. på din konto. ");
             }
         }
-//                System.out.println("\nDin nye saldo er: " + getBalance() + "kr.");
+                System.out.println("Saldo: " + dbMapper.getAccountBalance(kontoNr) + " kr.");
     }
 
     public void withdrawAmount() {
