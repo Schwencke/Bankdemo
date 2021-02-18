@@ -95,12 +95,20 @@ public class MainMenu {
                             break;
                         case 6:
                             System.out.println("Du valgte 6: opret ny kunde");
-                            Customer testCustomer = dbMapper.addCustomer(new Customer("testkunde", "efternavn"));
+                            String fornavn = Input.getString("Indtast fornavn: ");
+                            String efternavn = Input.getString("Indtast efternavn: ");
+                            addCustomer(fornavn, efternavn);
                             break;
 
                         case 7:
                             System.out.println("Du valgte 7: slet kunde fra kundekartotek");
-                            dbMapper.deleteCustomer(Input.getInt("indtast kundenummer for den kunde du ønsker at slette: "));
+                            if (dbMapper.deleteCustomer(Input.getInt("indtast kundenummer for den kunde du ønsker at slette: "))) {
+                                System.out.println("kunden blev slettet fra kartotek");
+                            }
+                            break;
+                        case 8:
+                            System.out.println("Du valgte 8: vis oversigt over kunder");
+                            viewAllCustomers();
                             break;
                         case 0:
                             System.out.println("du valgte 0: afslut");
@@ -122,6 +130,7 @@ public class MainMenu {
         }
     }
 
+
     private void showMainMenuKunde() {
         System.out.println("Hovedmenu:");
         System.out.println("Du har følgende valgmligheder:");
@@ -140,8 +149,10 @@ public class MainMenu {
         System.out.println("3: kontoudskrift");
         System.out.println("4: overfør penge mellem konti");
         System.out.println("5: opret ny konto til kunde");
-        System.out.println("6: opret ny kunde (test)");
-        System.out.println("7: slet kunde fra kartotek(test)");
+
+        System.out.println("6: opret ny kunde");
+        System.out.println("7: slet kunde fra kartotek");
+        System.out.println("8: vis oversigt over alle kunder");
         System.out.println("0: afslut");
     }
 
@@ -156,14 +167,24 @@ public class MainMenu {
 ////        }
 //    }
 
-// mangler vi ikke en usecase for at udskrive en liste over alle kunder?
+    public void viewAllCustomers() {
+        List<Customer> customerList = dbMapper.viewAllCustomers();
+        System.out.println("oversigt over kunder");
+        System.out.println("kundenr. \t" + "fornavn \t" + "efternavn");
+        for (Customer customer : customerList) {
+            System.out.print(customer.getCustomer_no() + "\t" + "\t" + "\t");
+            System.out.print(customer.getFirst_name() + "\t" + "\t");
+            System.out.println(customer.getLast_name());
+        }
+    }
 
-//    List<Customer> customerList = dbMapper.viewAllCustomers();
-//    for (Customer customer :customerList) {
-//        System.out.println(customer.getCustomer_no());
-//        System.out.println(customer.getFirst_name());
-//        System.out.println(customer.getLast_name());
-//        }
+    private void addCustomer(String fornavn, String efternavn) {
+        Customer newCustomer = new Customer(fornavn, efternavn);
+        if (dbMapper.addCustomer(newCustomer) != null) {
+            System.out.println("Ny kunde med kontonummer " + newCustomer.getCustomer_no() + " blev oprettet");
+        }
+
+    }
 
     public void depositAmount(int kontoNr, int amount) {
         if (amount <= 0) {
@@ -175,7 +196,7 @@ public class MainMenu {
                 System.out.print("du har indsat " + amount + " kr. på din konto. ");
             }
         }
-                System.out.println("Saldo: " + dbMapper.getAccountBalance(kontoNr) + " kr.");
+        System.out.println("Saldo: " + dbMapper.getAccountBalance(kontoNr) + " kr.");
     }
 
     public void withdrawAmount(int kontoNr, int amount) {
