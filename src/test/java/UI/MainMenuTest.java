@@ -13,49 +13,51 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainMenuTest {
     final String USER = "bankuser";
     final String PASSWORD = "Bank123";
-    final String URL = "jdbc:mysql://localhost:3306/bank_test?serverTimezone=CET&useSSL=false";
+    final String URL = "jdbc:mysql://localhost:3306/bank?serverTimezone=CET&useSSL=false";
 
     Database database = new Database(USER, PASSWORD, URL);
     DbMapper dbMapper = new DbMapper(database);
     MainMenu mainMenu = new MainMenu(database);
 
     Customer testCustomer;
-    int kontoNrTest;
     Account testAccount;
 
     @BeforeEach
     void setUp() {
         testCustomer = new Customer("test", "testefternavn");
         dbMapper.addCustomer(testCustomer);
-        kontoNrTest = dbMapper.newAccount(testCustomer.getCustomer_no());
-        testAccount = new Account(kontoNrTest);
-        mainMenu.depositAmount(kontoNrTest, 100);
+        dbMapper.newAccount(testCustomer.getCustomer_no());
 
     }
 
     @AfterEach
     void tearDown() {
-        dbMapper.deleteCustomer(testCustomer.getCustomer_no());
-        dbMapper.deleteAccount(testAccount.getAccNo());
+        dbMapper.deleteTESTAccounts();
+        dbMapper.deleteTESTCustomers();
 
     }
 
     @Test
     void depositAmount() {
-        assertEquals(100, dbMapper.getAccountBalance(kontoNrTest));
+        mainMenu.depositAmount(testCustomer.getCustomer_no(), 100);
+        assertEquals(100, dbMapper.getAccountBalance(testCustomer.getCustomer_no()));
 
 
     }
 
     @Test
     void withdrawAmount() {
-        mainMenu.withdrawAmount(kontoNrTest, 100);
-        assertEquals(0, dbMapper.getAccountBalance(kontoNrTest));
+        mainMenu.depositAmount(testCustomer.getCustomer_no(), 100);
+        mainMenu.withdrawAmount(testCustomer.getCustomer_no(), 100);
+        assertEquals(0, dbMapper.getAccountBalance(testCustomer.getCustomer_no()));
 
     }
 
     @Test
     void createNewAcc() {
+       int newAccNo = 2;
+       dbMapper.newAccount(newAccNo);
+       assertNotNull(dbMapper.getAccountBalance(newAccNo));
     }
 
     @Test

@@ -91,7 +91,8 @@ public class MainMenu {
                             break;
                         case 5:
                             System.out.println("Du valgte 5: opret ny konto til kunde");
-                            createNewAcc();
+                            int kundenr = Input.getInt("Hvilke kunde skal have ny konto?: ");
+                            createNewAcc(kundenr);
                             break;
                         case 6:
                             System.out.println("Du valgte 6: opret ny kunde");
@@ -192,8 +193,7 @@ public class MainMenu {
         }
     }
 
-    public void createNewAcc() {
-        int kundenr = Input.getInt("Hvilke kunde skal have ny konto?: ");
+    public void createNewAcc(int kundenr) {
         if (dbMapper.newAccount(kundenr) != 0) {
             int accNo = dbMapper.newAccount(kundenr);
             System.out.println("En ny konto til kunden med nr: " + accNo + " blev oprettet");

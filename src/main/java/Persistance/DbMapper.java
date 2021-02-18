@@ -241,6 +241,34 @@ public class DbMapper {
             e.printStackTrace();
         }
     }
+    public void deleteTESTCustomers() {
+        boolean result = false;
+        String sql = "delete FROM customers";
+        try (Connection connection = database.connect()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+    }
+    public void deleteTESTAccounts() {
+        boolean result = false;
+        String sql = "delete FROM accounts";
+        try (Connection connection = database.connect()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Fejl i connection til databasen");
+            e.printStackTrace();
+        }
+    }
 }
 
 
